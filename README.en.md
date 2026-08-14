@@ -2,6 +2,8 @@
 
 > Give this repo's URL to an AI, and it will auto-install your commonly used skills into any project.
 
+> [中文](README.md) · **English** · [日本語](README.ja.md)
+
 This repo is a **sources-only** skill kit: it stores **no skill bodies** — only a `manifest.json` listing each skill and its upstream source. Installing pulls the **latest version directly from the source**, so installing from this repo can never give you a stale copy.
 
 ## Bundled skills (19)
