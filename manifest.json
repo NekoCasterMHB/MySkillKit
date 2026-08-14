@@ -32,6 +32,20 @@
       }
     },
     {
+      "name": "canvas-design",
+      "description": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/anthropics/skills.git",
+        "path": "skills/canvas-design",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "f6656c1256d5a8adfa37db9110046ef20bac644c",
+        "checkedAt": "2026-08-14T05:29:15.526Z"
+      }
+    },
+    {
       "name": "cloudflare",
       "description": "Comprehensive Cloudflare platform skill covering Workers, Pages, storage (KV, D1, R2), AI (Workers AI, Vectorize, Agents SDK), feature flags (Flagship), networking (Tunnel, Spectrum), security (WAF, DDoS), and infrastructure-as-code (Terraform, Pulumi). Use for any Cloudflare development task. Biases towards retrieval from Cloudflare docs over pre-trained knowledge.",
       "source": {
@@ -99,6 +113,20 @@
       "version": {
         "commit": "c6f69c631292444cc541ac6d91e2226b0ff247da",
         "checkedAt": "2026-08-14T03:46:40.928Z"
+      }
+    },
+    {
+      "name": "nuxt",
+      "description": "Nuxt application development and maintenance. Use for project structure, pages and routing, data fetching, SSR-safe state, middleware, plugins, server routes, runtime config, route rules, layers, built-in components, hydration, upgrades, and testing.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/onmax/nuxt-skills.git",
+        "path": "skills/nuxt",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "affb417b5ebc06956728f3cbe3d68baa7cdc37aa",
+        "checkedAt": "2026-08-14T05:29:10.173Z"
       }
     },
     {
@@ -172,6 +200,20 @@
       }
     },
     {
+      "name": "vue",
+      "description": "Use when editing .vue files, creating Vue 3 components, writing composables, or testing Vue code - provides Composition API patterns, props/emits best practices, VueUse integration, and reactive destructuring guidance",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/onmax/nuxt-skills.git",
+        "path": "skills/vue",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "affb417b5ebc06956728f3cbe3d68baa7cdc37aa",
+        "checkedAt": "2026-08-14T05:29:11.937Z"
+      }
+    },
+    {
       "name": "web-design-engineer",
       "description": "Build or redesign polished browser-rendered visual artifacts with HTML/CSS/JavaScript/React: pages, dashboards, prototypes, slide decks, animations, UI mockups, and data visualizations. Use for visual front-end creation, design-system exploration, design critique, or explicit browser acceptance / QA of a web artifact. Not for back-end, CLI, non-visual coding, source-to-longform article conversion, or narration-driven click-through video presentations.",
       "source": {
@@ -183,6 +225,20 @@
       "version": {
         "commit": "aaf9a82f5efd73e87cc0998edc398e75bfc35901",
         "checkedAt": "2026-08-14T03:46:39.335Z"
+      }
+    },
+    {
+      "name": "webapp-testing",
+      "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/anthropics/skills.git",
+        "path": "skills/webapp-testing",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "f6656c1256d5a8adfa37db9110046ef20bac644c",
+        "checkedAt": "2026-08-14T05:29:13.715Z"
       }
     },
     {
@@ -214,7 +270,7 @@
       }
     }
   ],
-  "generatedAt": "2026-08-14T03:56:41.258Z",
+  "generatedAt": "2026-08-14T05:29:15.544Z",
   "mcpServers": {
     "nuxt-ui": {
       "type": "http",
@@ -237,6 +293,7 @@
       "type": "http",
       "url": "https://nuxt.com/mcp",
       "skills": [
+        "nuxt",
         "nuxt-ui"
       ]
     }

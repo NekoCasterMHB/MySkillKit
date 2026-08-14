@@ -4,7 +4,7 @@
 
 本仓库是**纯来源清单**式的个人技能集：**不保存技能本体**，只维护一份 `manifest.json` 技能清单，记录每个技能的上游公开来源。安装时直接按清单从源头拉取**最新版** —— 从结构上杜绝"装到旧版本"的问题。
 
-## 包含的技能（15 个）
+## 包含的技能（19 个）
 
 | 技能 | 用途 | 上游来源 |
 |---|---|---|
@@ -16,7 +16,11 @@
 | `brand` | 品牌声音、视觉识别、信息框架 | 同上 |
 | `slides` | Chart.js 战略演示文稿 | 同上 |
 | `nuxt-ui` | 用 @nuxt/ui v4 构建界面 | [nuxt/ui](https://github.com/nuxt/ui)（官方） |
+| `nuxt` | Nuxt 框架核心（路由/组件/SSR/数据获取） | [onmax/nuxt-skills](https://github.com/onmax/nuxt-skills)（官方） |
+| `vue` | Vue 核心（组合式 API/响应式/组件） | 同上 |
 | `supabase` | Supabase 全产品开发（DB/Auth/Edge/Storage…） | [supabase/agent-skills](https://github.com/supabase/agent-skills)（官方） |
+| `webapp-testing` | Web 应用测试方法论与验收清单 | [anthropics/skills](https://github.com/anthropics/skills)（官方） |
+| `canvas-design` | HTML Canvas 视觉资产生成 | 同上 |
 | `cloudflare` | Cloudflare 全平台开发（Workers/Pages/KV/D1/R2/AI/安全） | [cloudflare/skills](https://github.com/cloudflare/skills)（官方） |
 | `durable-objects` | Cloudflare Durable Objects：有状态协同/RPC/SQLite | 同上 |
 | `wrangler` | Cloudflare Workers CLI 部署与开发 | 同上 |
@@ -30,7 +34,7 @@
 
 | MCP 服务器 | URL | 关联技能 | 配置位置 |
 |---|---|---|---|
-| `nuxt` | https://nuxt.com/mcp | nuxt-ui | 项目级 → `.agents/mcp.json`；用户级 → `~/.zcode/cli/config.json` |
+| `nuxt` | https://nuxt.com/mcp | nuxt、nuxt-ui | 项目级 → `.agents/mcp.json`；用户级 → `~/.zcode/cli/config.json` |
 | `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | 同上 |
 | `cloudflare` | https://mcp.cloudflare.com/mcp | cloudflare、durable-objects、wrangler、workers-best-practices | 同上 |
 

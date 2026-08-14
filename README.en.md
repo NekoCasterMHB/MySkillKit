@@ -4,7 +4,7 @@
 
 This repo is a **sources-only** skill kit: it stores **no skill bodies** — only a `manifest.json` listing each skill and its upstream source. Installing pulls the **latest version directly from the source**, so installing from this repo can never give you a stale copy.
 
-## Bundled skills (15)
+## Bundled skills (19)
 
 | Skill | Purpose | Upstream |
 |---|---|---|
@@ -16,7 +16,11 @@ This repo is a **sources-only** skill kit: it stores **no skill bodies** — onl
 | `brand` | Brand voice, visual identity, messaging frameworks | same |
 | `slides` | Chart.js strategic HTML presentations | same |
 | `nuxt-ui` | Build UIs with @nuxt/ui v4 | [nuxt/ui](https://github.com/nuxt/ui) (official) |
+| `nuxt` | Nuxt framework core (routing/components/SSR/data fetching) | [onmax/nuxt-skills](https://github.com/onmax/nuxt-skills) (official) |
+| `vue` | Vue core (Composition API/reactivity/components) | same |
 | `supabase` | All Supabase products (DB/Auth/Edge/Storage…) | [supabase/agent-skills](https://github.com/supabase/agent-skills) (official) |
+| `webapp-testing` | Web app testing methodology & acceptance checklists | [anthropics/skills](https://github.com/anthropics/skills) (official) |
+| `canvas-design` | HTML Canvas visual asset generation | same |
 | `cloudflare` | Full Cloudflare platform (Workers/Pages/KV/D1/R2/AI/Security) | [cloudflare/skills](https://github.com/cloudflare/skills) (official) |
 | `durable-objects` | Cloudflare Durable Objects: stateful coordination/RPC/SQLite | same |
 | `wrangler` | Cloudflare Workers CLI deploy & develop | same |
@@ -30,7 +34,7 @@ Installing skills also auto-configures their **associated MCP servers** (defined
 
 | MCP server | URL | Linked skills | Written to |
 |---|---|---|---|
-| `nuxt` | https://nuxt.com/mcp | nuxt-ui | project → `.agents/mcp.json`; user → `~/.zcode/cli/config.json` |
+| `nuxt` | https://nuxt.com/mcp | nuxt, nuxt-ui | project → `.agents/mcp.json`; user → `~/.zcode/cli/config.json` |
 | `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | same |
 | `cloudflare` | https://mcp.cloudflare.com/mcp | cloudflare, durable-objects, wrangler, workers-best-practices | same |
 
