@@ -19,14 +19,18 @@
 
 1. **获取本仓库**：若你手头没有本地副本，先 `git clone --depth 1 <仓库地址> /tmp/MySkillKit`
 2. **确认目标**：项目级 → 当前工作目录的 `.agents/skills/`；用户级 → `~/.agents/skills/`。不确定就问用户
-3. **确认选择**：读 `manifest.json` 列出技能，与用户确认装哪些（默认全部）
-4. **逐个安装**：
+3. **逐个询问技能（禁止全自动安装）**：读 `manifest.json` 列出所有技能，**一个一个**向用户展示（名称 + 用途），单独询问「要装吗？」。不要默认全装，不要跳过询问；用户明确说「全部装」时才批量执行
+4. **按用户选择逐个安装**：
    - `type: git` → `git clone --depth 1 --filter=blob:none --sparse -b <ref> <url> /tmp/src && git -C /tmp/src sparse-checkout set <path>`，然后 `cp -R /tmp/src/<path> 目标/.agents/skills/<name>/`
    - `type: local` → 从 `<path>`（本机 `~/.agents/skills/<name>`）直接复制；其他机器上跳过并提示「该技能仅在所有者机器可用」
    - `type: embedded` → `cp -R vendor/<name> 目标/.agents/skills/<name>/`
+   - 也可以让用户选择后运行 `install.sh <技能名>...`（不要直接运行不带参数的 `install.sh`，那会全量安装）
 5. **记录版本**：在 `<目标根>/.agents/.skillkit-installed.json` 写入 `{ "skills": { "<name>": { "source": …, "commit": …, "installedAt": … } } }`（commit 用 `git -C /tmp/src rev-parse HEAD`）
 6. **校验**：确认每个安装目录含 `SKILL.md`，frontmatter 有 `name`（= 目录名）与 `description`（≤1024 字符）
-7. **报告**：装了什么、来源仓库、对应 commit；提示「技能在会话启动时加载，需新开会话生效」
+7. **报告项目当前状态**：装完（或用户拒绝后）输出两份清单：
+   - **skills 列表**：`<项目>/.agents/skills/` 下实际存在的技能目录（含已有的）
+   - **MCP 列表**：`<项目>/.agents/mcp.json` 中的服务器（名称 + URL）；若装到了用户级，同时列出 `~/.zcode/cli/config.json` 中 `mcp.servers` 的名称
+   - 最后提示「技能/MCP 在会话启动时加载，需新开会话生效」
 
 ## 任务：检查 / 更新已安装技能
 
@@ -39,7 +43,9 @@
 
 ## 任务：配置 MCP 服务器（与技能安装一起）
 
-安装 / 更新技能后，检查 `manifest.json` 的 `mcpServers` 段：其中 `skills` 列表包含本次安装的技能时，把该服务器配置到目标：
+安装 / 更新技能后，检查 `manifest.json` 的 `mcpServers` 段。对其中 `skills` 列表与本次安装技能相关的每个服务器，**单独询问用户**「要配置这个 MCP 服务器吗？」（展示名称 + URL + 关联技能），**只有用户同意才写入**，不要自动全配。
+
+写入目标：
 
 - 项目级安装 → 写入 / 合并 `<目标项目>/.agents/mcp.json`（顶层 `mcpServers` 键，ZCode 工作区兼容标准，自动连接）
 - 用户级安装 → 合并到 `~/.zcode/cli/config.json` 的 `mcp.servers`（**先备份原文件**，保留原有其他配置）
@@ -61,6 +67,7 @@
 
 ## 重要规则
 
+- **交互确认是默认行为**：安装每个技能、配置每个 MCP 服务器前，都逐个询问用户确认，不自动全装、不全配（除非用户明确说「全部装」）
 - 技能目录名必须等于技能名；`description` ≤1024 字符，否则技能无法被加载
 - MCP 服务器名与 URL 由 `manifest.json` 的 `mcpServers` 维护；配置文件格式严格（见上），合并时按 URL 去重、保留原有配置
 - 用户级 `~/.agents/skills/` 优先于项目级 `.agents/skills/`：同名技能用户级会遮蔽项目级，安装 / 更新时提醒用户

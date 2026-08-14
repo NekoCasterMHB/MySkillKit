@@ -46,13 +46,16 @@ Installing skills also auto-configures their **associated MCP servers** (defined
 
 | Scenario | Say to your AI |
 |---|---|
-| New project, install all (project-scoped) | "Initialize this project with all the skills from https://github.com/NekoCasterMHB/MySkillKit" |
+| New project, interactive (default) | "Initialize this project with the skills from https://github.com/NekoCasterMHB/MySkillKit — ask me one by one which skills to install and which MCP servers to configure" |
+| New project, install all explicitly | "Initialize this project with all the skills from https://github.com/NekoCasterMHB/MySkillKit" |
 | New project, selected skills | "Clone https://github.com/NekoCasterMHB/MySkillKit and install the design, nuxt-ui and supabase skills into this project" |
 | Install globally (all projects) | "Use MySkillKit (https://github.com/NekoCasterMHB/MySkillKit) to install the skills to user-level ~/.agents/skills" |
 | Check for updates | "Check if the skills in this project have updates using MySkillKit" |
 | Update skills | "Update the skills in this project using MySkillKit (back up old versions before overwriting)" |
 
-The AI clones the repo → reads the `AGENTS.md` install protocol + `manifest.json` → confirms which skills with you → fetches the latest version from each source → validates → **configures the linked MCP servers** → reports.
+> Default is **confirm-each mode**: the AI asks one by one whether to install each skill and configure each MCP server, then reports the project's current skills list and MCP server list. Bulk install only when you explicitly say "install all".
+
+The AI clones the repo → reads the `AGENTS.md` install protocol + `manifest.json` → **asks you one by one which skills to install and which MCP servers to configure (never auto-installs everything)** → fetches the latest version from each chosen source → validates → configures the chosen MCP servers → **finally reports the project's current skills list and MCP server list**.
 
 > 💡 New session required after install/update — skills load at session start.
 

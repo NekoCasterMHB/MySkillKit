@@ -46,13 +46,16 @@
 
 | 场景 | 对 AI 说的话 |
 |---|---|
-| 新项目装全部（项目级） | 「用 https://github.com/NekoCasterMHB/MySkillKit 里的 skills 初始化这个项目，全部安装」 |
+| 新项目初始化（默认交互） | 「用 https://github.com/NekoCasterMHB/MySkillKit 里的 skills 初始化这个项目，装哪些技能、配哪些 MCP 都逐个问我」 |
+| 明确全部安装 | 「用 https://github.com/NekoCasterMHB/MySkillKit 里的 skills 初始化这个项目，全部安装」 |
 | 新项目选装几个 | 「克隆 https://github.com/NekoCasterMHB/MySkillKit，给这个项目装 design、nuxt-ui、supabase 这三个 skill」 |
 | 装到全局（所有项目可用） | 「用 MySkillKit（https://github.com/NekoCasterMHB/MySkillKit）把 skills 装到用户级 ~/.agents/skills」 |
 | 检查项目里的 skills 是否有更新 | 「用 MySkillKit 检查这个项目已安装的 skills 有没有更新」 |
 | 更新项目里的 skills | 「用 MySkillKit 更新这个项目里的 skills（覆盖前备份旧版）」 |
 
-AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manifest.json` 清单 → 与你确认要装哪些（或按你的指定）→ 从源头拉取最新版 → 校验 → **一并配置关联的 MCP 服务器** → 报告结果。
+> 默认是**逐项确认模式**：AI 会一个一个问你要不要装这个技能、要不要配这个 MCP，全部完成后报告项目当前的 skills 列表和 MCP 列表。只有你明确说「全部安装」才批量执行。
+
+AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manifest.json` 清单 → **逐个询问你要装哪些技能、配置哪些 MCP 服务器（不会全自动安装）** → 按你的选择从源头拉取最新版 → 校验 → 配置选定的 MCP → **最后报告项目当前的 skills 列表和 MCP 列表**。
 
 > 💡 记不住 URL 时，只说「用我的 MySkillKit 仓库」也能理解（ZCode 知道你的常用仓库），但给出 URL 最稳妥。装完/更新后**新开会话**生效。
 
