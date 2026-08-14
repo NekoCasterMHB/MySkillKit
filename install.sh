@@ -3,7 +3,7 @@
 # MySkillKit — 从来源清单一键安装 / 检查 / 更新 AI 技能
 #
 # 用法:
-#   ./install.sh [skill ...]            安装指定技能到当前项目（默认全部）
+#   ./install.sh [skill ...]            安装指定技能（不带则逐个询问是否安装）
 #   ./install.sh --global [skill ...]   安装到用户级 ~/.agents/skills
 #   ./install.sh mcp                    查看 MCP 服务器配置状态
 #   ./install.sh list                   列出清单中的技能
@@ -14,7 +14,7 @@
 #   --global, -g   目标为用户级 ~/.agents/skills（默认: 当前项目 .agents/skills）
 #   --project      显式指定项目级目标
 #   --force, -f    已存在且无安装记录时直接覆盖不询问
-#   --yes, -y      所有询问使用默认值
+#   --yes, -y      所有询问使用默认值（无参数时=默认全部安装）
 #   --no-mcp       安装后不配置关联的 MCP 服务器
 #   -h, --help     帮助
 #
@@ -22,7 +22,7 @@
 #   本仓库不保存技能本体。安装 = 按 manifest.json 从源头拉取最新版，
 #   因此从本仓库不可能装到旧版本。安装记录写入
 #   <目标>/.agents/.skillkit-installed.json，check/update 基于它对比上游 commit。
-#   安装技能后会按 manifest.json 的 mcpServers 自动配置关联的 MCP 服务器：
+#   不带技能名时逐个询问（默认不装）；MCP 服务器也逐个确认。
 #   项目级 → <项目>/.agents/mcp.json；用户级 → ~/.zcode/cli/config.json（先备份）。
 #
 set -euo pipefail
@@ -40,7 +40,7 @@ MCP_ENABLED=1
 SELECTED=()
 
 usage() {
-  sed -n '2,22p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+  sed -n '2,24p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
   exit 0
 }
 
@@ -390,7 +390,27 @@ esac
 ALL_SKILLS=()
 while IFS= read -r _s; do ALL_SKILLS+=("$_s"); done < <(skill_names)
 if [[ ${#SELECTED[@]} -eq 0 ]]; then
-  TARGETS=("${ALL_SKILLS[@]}")
+  if [[ "$YES" == 1 ]]; then
+    # -y 明确要求全默认 → 全部安装（保持批量语义）
+    TARGETS=("${ALL_SKILLS[@]}")
+    info "-y 已指定：默认安装全部技能"
+  else
+    # 未指定技能名 → 逐个询问（默认不装；update 模式默认更新）
+    TARGETS=()
+    for s in "${ALL_SKILLS[@]}"; do
+      entry="$(skill_entry "$s")"
+      desc="$(node -e 'const d=JSON.parse(process.argv[1]).description||"";process.stdout.write(d.slice(0,60)+(d.length>60?"…":""))' "$entry")"
+      if [[ "$MODE" == update ]]; then
+        if confirm "更新 $s? ($desc)" y; then TARGETS+=("$s"); fi
+      else
+        if confirm "安装 $s? ($desc)" n; then TARGETS+=("$s"); fi
+      fi
+    done
+    if [[ ${#TARGETS[@]} -eq 0 ]]; then
+      info "未选择任何技能，退出"
+      exit 0
+    fi
+  fi
 else
   TARGETS=()
   for s in "${SELECTED[@]}"; do
@@ -418,15 +438,37 @@ for t in "${TARGETS[@]}"; do
   install_one "$t" "$MODE" || fail_count=$((fail_count + 1))
 done
 
-# 配置与本次技能关联的 MCP 服务器
+# 配置与本次技能关联的 MCP 服务器（逐个确认，非交互环境跳过）
 if [[ "$MCP_ENABLED" == 1 ]]; then
   servers_json="$(mcp_servers_for "${TARGETS[@]}")"
   if [[ "$servers_json" != "[]" ]]; then
     echo ""
-    info "配置关联的 MCP 服务器…"
-    apply_mcp_for_target "$servers_json"
-    echo ""
-    warn "MCP 服务器在会话启动时自动连接，需新开会话生效"
+    if [[ -t 0 || "$YES" == 1 ]]; then
+      info "配置关联的 MCP 服务器…（逐个确认）"
+      # 先读进数组再询问：避免 while+进程替换把 confirm 的 read 输入流劫持
+      MCP_LIST=()
+      while IFS=$'\t' read -r _n _u; do MCP_LIST+=("$_n" "$_u"); done < <(node -e 'const a=JSON.parse(process.argv[1]);for(const s of a)console.log(s.name+"\t"+(s.url||s.command))' "$servers_json")
+      chosen=()
+      for ((i = 0; i < ${#MCP_LIST[@]}; i += 2)); do
+        sname="${MCP_LIST[i]}"
+        surl="${MCP_LIST[i + 1]}"
+        if confirm "配置 MCP 服务器 $sname ($surl)？" y; then chosen+=("$sname"); fi
+      done
+      if [[ ${#chosen[@]} -gt 0 ]]; then
+        chosen_json="$(node -e '
+          const a=JSON.parse(process.argv[1]);
+          const names=new Set(process.argv.slice(2));
+          process.stdout.write(JSON.stringify(a.filter(s=>names.has(s.name))));
+        ' "$servers_json" "${chosen[@]}")"
+        apply_mcp_for_target "$chosen_json"
+        echo ""
+        warn "MCP 服务器在会话启动时自动连接，需新开会话生效"
+      else
+        info "未选择任何 MCP 服务器"
+      fi
+    else
+      info "非交互环境：跳过 MCP 配置（需要时请交互运行，或让 AI 按 AGENTS.md 协议逐个确认）"
+    fi
   fi
 fi
 

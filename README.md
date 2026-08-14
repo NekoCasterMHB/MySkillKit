@@ -62,15 +62,17 @@ AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manife
 ### 方式 B：一键脚本
 
 ```bash
-# 装到当前项目（项目级，随项目版本控制）
+# 不带技能名时逐个询问（默认不装）；指定技能名则直接安装
 ./install.sh
+./install.sh design nuxt-ui        # 只装指定技能
+./install.sh -y                    # 全默认：安装全部技能 + 配置关联 MCP
 
 # 装到用户级（所有项目可用）
 ./install.sh --global
 
-# 只装指定技能 / 列出技能 / 检查更新 / 强制更新
-./install.sh design nuxt-ui
+# 列出技能 / 查看 MCP 状态 / 检查更新 / 强制更新
 ./install.sh list
+./install.sh mcp
 ./install.sh check
 ./install.sh update
 
@@ -78,6 +80,8 @@ AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manife
 git clone --depth 1 https://github.com/NekoCasterMHB/MySkillKit.git /tmp/MySkillKit \
   && bash /tmp/MySkillKit/install.sh --global
 ```
+
+> `install.sh` 与 AI 协议一致：**逐个询问**要装哪些技能（默认不装）、**逐个确认**要配置哪些 MCP 服务器（默认配置，可拒绝）；非交互环境（管道/CI）默认不装任何技能并跳过 MCP。
 
 ## 如何保证装到的不是旧版本
 

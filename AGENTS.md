@@ -24,7 +24,7 @@
    - `type: git` → `git clone --depth 1 --filter=blob:none --sparse -b <ref> <url> /tmp/src && git -C /tmp/src sparse-checkout set <path>`，然后 `cp -R /tmp/src/<path> 目标/.agents/skills/<name>/`
    - `type: local` → 从 `<path>`（本机 `~/.agents/skills/<name>`）直接复制；其他机器上跳过并提示「该技能仅在所有者机器可用」
    - `type: embedded` → `cp -R vendor/<name> 目标/.agents/skills/<name>/`
-   - 也可以让用户选择后运行 `install.sh <技能名>...`（不要直接运行不带参数的 `install.sh`，那会全量安装）
+   - 也可以让用户选择后运行 `install.sh <技能名>...`；不带参数运行时它会逐个询问（交互式），非交互环境默认不装、跳过 MCP
 5. **记录版本**：在 `<目标根>/.agents/.skillkit-installed.json` 写入 `{ "skills": { "<name>": { "source": …, "commit": …, "installedAt": … } } }`（commit 用 `git -C /tmp/src rev-parse HEAD`）
 6. **校验**：确认每个安装目录含 `SKILL.md`，frontmatter 有 `name`（= 目录名）与 `description`（≤1024 字符）
 7. **报告项目当前状态**：装完（或用户拒绝后）输出两份清单：
