@@ -30,7 +30,8 @@
 
 | MCP 服务器 | URL | 关联技能 | 配置位置 |
 |---|---|---|---|
-| `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | 项目级 → `.agents/mcp.json`；用户级 → `~/.zcode/cli/config.json` |
+| `nuxt` | https://nuxt.com/mcp | nuxt-ui | 项目级 → `.agents/mcp.json`；用户级 → `~/.zcode/cli/config.json` |
+| `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | 同上 |
 | `cloudflare` | https://mcp.cloudflare.com/mcp | cloudflare、durable-objects、wrangler、workers-best-practices | 同上 |
 
 - **按 URL 去重**：目标中已有同 URL 的服务器（无论名字）会自动跳过，不会重复配置

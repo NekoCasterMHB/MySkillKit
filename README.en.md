@@ -30,7 +30,8 @@ Installing skills also auto-configures their **associated MCP servers** (defined
 
 | MCP server | URL | Linked skills | Written to |
 |---|---|---|---|
-| `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | project → `.agents/mcp.json`; user → `~/.zcode/cli/config.json` |
+| `nuxt` | https://nuxt.com/mcp | nuxt-ui | project → `.agents/mcp.json`; user → `~/.zcode/cli/config.json` |
+| `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | same |
 | `cloudflare` | https://mcp.cloudflare.com/mcp | cloudflare, durable-objects, wrangler, workers-best-practices | same |
 
 - **Deduped by URL** — an existing server with the same URL (any name) is skipped

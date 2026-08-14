@@ -232,6 +232,13 @@
         "wrangler",
         "workers-best-practices"
       ]
+    },
+    "nuxt": {
+      "type": "http",
+      "url": "https://nuxt.com/mcp",
+      "skills": [
+        "nuxt-ui"
+      ]
     }
   }
 }
