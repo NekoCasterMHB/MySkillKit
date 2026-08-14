@@ -28,11 +28,19 @@
 
 ### 方式 A：告诉 AI（推荐）
 
-在新项目里对 AI 说：
+**给 AI 的指令示例（复制即用）：**
 
-> 用 https://github.com/NekoCasterMHB/MySkillKit 里的常用 skills 初始化这个项目
+| 场景 | 对 AI 说的话 |
+|---|---|
+| 新项目装全部（项目级） | 「用 https://github.com/NekoCasterMHB/MySkillKit 里的 skills 初始化这个项目，全部安装」 |
+| 新项目选装几个 | 「克隆 https://github.com/NekoCasterMHB/MySkillKit，给这个项目装 design、nuxt-ui、supabase 这三个 skill」 |
+| 装到全局（所有项目可用） | 「用 MySkillKit（https://github.com/NekoCasterMHB/MySkillKit）把 skills 装到用户级 ~/.agents/skills」 |
+| 检查项目里的 skills 是否有更新 | 「用 MySkillKit 检查这个项目已安装的 skills 有没有更新」 |
+| 更新项目里的 skills | 「用 MySkillKit 更新这个项目里的 skills（覆盖前备份旧版）」 |
 
-AI 会克隆本仓库 → 读取 `AGENTS.md` 安装协议和 `manifest.json` 清单 → 按来源逐个拉取最新版 → 校验 → 报告。装到项目 `.agents/skills/`（项目级），或 `~/.agents/skills/`（全局，所有项目可用）。
+AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manifest.json` 清单 → 与你确认要装哪些（或按你的指定）→ 从源头拉取最新版 → 校验 → 报告结果。
+
+> 💡 记不住 URL 时，只说「用我的 MySkillKit 仓库」也能理解（ZCode 知道你的常用仓库），但给出 URL 最稳妥。装完/更新后**新开会话**生效。
 
 ### 方式 B：一键脚本
 

@@ -28,11 +28,19 @@ This repo is a **sources-only** skill kit: it stores **no skill bodies** — onl
 
 ### A. Ask an AI (recommended)
 
-In a new project, tell your AI:
+**Ready-to-use prompts:**
 
-> Initialize this project with the common skills from https://github.com/NekoCasterMHB/MySkillKit
+| Scenario | Say to your AI |
+|---|---|
+| New project, install all (project-scoped) | "Initialize this project with all the skills from https://github.com/NekoCasterMHB/MySkillKit" |
+| New project, selected skills | "Clone https://github.com/NekoCasterMHB/MySkillKit and install the design, nuxt-ui and supabase skills into this project" |
+| Install globally (all projects) | "Use MySkillKit (https://github.com/NekoCasterMHB/MySkillKit) to install the skills to user-level ~/.agents/skills" |
+| Check for updates | "Check if the skills in this project have updates using MySkillKit" |
+| Update skills | "Update the skills in this project using MySkillKit (back up old versions before overwriting)" |
 
-The AI clones this repo → reads the `AGENTS.md` install protocol + `manifest.json` → fetches the latest version of each skill from its source → validates → reports. Installs to the project's `.agents/skills/` (project-scoped) or `~/.agents/skills/` (user-global).
+The AI clones the repo → reads the `AGENTS.md` install protocol + `manifest.json` → confirms which skills with you → fetches the latest version from each source → validates → reports.
+
+> 💡 New session required after install/update — skills load at session start.
 
 ### B. One-command script
 
