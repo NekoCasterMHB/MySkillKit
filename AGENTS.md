@@ -37,6 +37,22 @@
 3. 报告过期项；用户确认后按安装流程重新拉取覆盖，**覆盖前先把旧目录备份到 `<目标>/.agents/skills/.backup/<name>-<时间戳>/`**
 4. `type: local`：提示「本地来源，直接看 `~/.agents/skills/<name>` 即可」；`type: embedded`：随本仓库更新
 
+## 任务：配置 MCP 服务器（与技能安装一起）
+
+安装 / 更新技能后，检查 `manifest.json` 的 `mcpServers` 段：其中 `skills` 列表包含本次安装的技能时，把该服务器配置到目标：
+
+- 项目级安装 → 写入 / 合并 `<目标项目>/.agents/mcp.json`（顶层 `mcpServers` 键，ZCode 工作区兼容标准，自动连接）
+- 用户级安装 → 合并到 `~/.zcode/cli/config.json` 的 `mcp.servers`（**先备份原文件**，保留原有其他配置）
+
+合并规则：
+
+- 服务器条目格式必须严格（未知字段会导致服务器被丢弃）：
+  - http/sse：`{ "type": "http", "url": "…" }`
+  - stdio：`{ "type": "stdio", "command": "…", "args": […], "env": {…} }`
+- 按 URL 去重：目标中已存在同 URL 的服务器（无论名字）则跳过
+- 不要写入任何密钥；需要认证的服务器（如 OAuth）在报告中提示用户首次连接时完成授权
+- MCP 服务器在会话启动时自动连接，需新开会话生效
+
 ## 任务：维护清单（新增 / 刷新技能）
 
 - 新增技能：`node scripts/update-manifest.mjs add <name> --source git --url <url> --path <path> --ref <ref>`（或 `--source local --path …` / `--source embedded`）
@@ -46,5 +62,6 @@
 ## 重要规则
 
 - 技能目录名必须等于技能名；`description` ≤1024 字符，否则技能无法被加载
+- MCP 服务器名与 URL 由 `manifest.json` 的 `mcpServers` 维护；配置文件格式严格（见上），合并时按 URL 去重、保留原有配置
 - 用户级 `~/.agents/skills/` 优先于项目级 `.agents/skills/`：同名技能用户级会遮蔽项目级，安装 / 更新时提醒用户
 - 本仓库的变更（manifest / 协议 / 脚本）直接 commit + push 即可，AI 侧无需任何额外配置

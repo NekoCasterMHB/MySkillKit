@@ -107,6 +107,38 @@ for (const skill of manifest.skills) {
   }
 }
 
+// mcpServers 校验
+const mcp = manifest.mcpServers ?? {};
+const mcpNames = Object.keys(mcp);
+if (mcpNames.length === 0) {
+  console.log('  ⏭  无 mcpServers 定义');
+} else {
+  ok(`${mcpNames.length} 个 MCP 服务器`);
+  const urls = new Set();
+  for (const [name, s] of Object.entries(mcp)) {
+    if (!s.type || !['http', 'sse', 'stdio'].includes(s.type)) {
+      err(`${name}: mcpServers.type 必须是 http / sse / stdio`);
+      continue;
+    }
+    if (s.type === 'stdio') {
+      if (!s.command || typeof s.command !== 'string') err(`${name}: stdio 需要 command (字符串)`);
+      else ok(`${name}: stdio ${s.command}`);
+    } else {
+      if (!s.url) err(`${name}: 缺少 url`);
+      else if (urls.has(s.url)) err(`${name}: URL 与另一个服务器重复 (${s.url})`);
+      else {
+        urls.add(s.url);
+        ok(`${name}: ${s.type} ${s.url}`);
+      }
+    }
+    if (s.skills) {
+      for (const k of s.skills) {
+        if (!manifest.skills.some((x) => x.name === k)) err(`${name}: skills 引用了不存在的技能 ${k}`);
+      }
+    }
+  }
+}
+
 // 网络可达性
 if (process.argv.includes('--network')) {
   console.log('\n检查 git 来源可达性（ls-remote）…');

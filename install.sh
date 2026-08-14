@@ -5,6 +5,7 @@
 # 用法:
 #   ./install.sh [skill ...]            安装指定技能到当前项目（默认全部）
 #   ./install.sh --global [skill ...]   安装到用户级 ~/.agents/skills
+#   ./install.sh mcp                    查看 MCP 服务器配置状态
 #   ./install.sh list                   列出清单中的技能
 #   ./install.sh check                  检查已安装技能是否有更新
 #   ./install.sh update [skill ...]     强制从源头重新拉取（覆盖前自动备份）
@@ -14,12 +15,15 @@
 #   --project      显式指定项目级目标
 #   --force, -f    已存在且无安装记录时直接覆盖不询问
 #   --yes, -y      所有询问使用默认值
+#   --no-mcp       安装后不配置关联的 MCP 服务器
 #   -h, --help     帮助
 #
 # 说明:
 #   本仓库不保存技能本体。安装 = 按 manifest.json 从源头拉取最新版，
 #   因此从本仓库不可能装到旧版本。安装记录写入
 #   <目标>/.agents/.skillkit-installed.json，check/update 基于它对比上游 commit。
+#   安装技能后会按 manifest.json 的 mcpServers 自动配置关联的 MCP 服务器：
+#   项目级 → <项目>/.agents/mcp.json；用户级 → ~/.zcode/cli/config.json（先备份）。
 #
 set -euo pipefail
 
@@ -28,24 +32,26 @@ MANIFEST="$KIT_DIR/manifest.json"
 BACKUP_DIR_NAME=".backup"
 
 # ---------- 参数解析 ----------
-MODE=install        # install | update | check | list
+MODE=install        # install | update | check | list | mcp
 TARGET_TYPE=project # project | global
 FORCE=0
 YES=0
+MCP_ENABLED=1
 SELECTED=()
 
 usage() {
-  sed -n '2,20p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
+  sed -n '2,22p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
   exit 0
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    list|check|update) MODE="$1"; shift ;;
+    list|check|update|mcp) MODE="$1"; shift ;;
     --global|-g) TARGET_TYPE=global; shift ;;
     --project) TARGET_TYPE=project; shift ;;
     --force|-f) FORCE=1; shift ;;
     --yes|-y) YES=1; shift ;;
+    --no-mcp) MCP_ENABLED=0; shift ;;
     -h|--help) usage ;;
     -*) echo "未知参数: $1"; usage ;;
     *) SELECTED+=("$1"); shift ;;
@@ -141,6 +147,91 @@ verify_skill() { # dest name → 简单 frontmatter 校验
   desc_len="$(echo "$fm" | awk '/^description:/{print length(substr($0,index($0,":")+2))}')"
   if [[ -z "$desc_len" ]]; then warn "$2: 缺少 description"
   elif (( desc_len > 1024 )); then warn "$2: description ${desc_len} 字符 > 1024（无法加载）"; fi
+}
+
+# ---------- MCP 服务器配置 ----------
+mcp_servers_for() { # skill names... → 与这些技能关联的服务器 JSON 数组
+  node -e '
+    const m=require(process.argv[1]);
+    const names=new Set(process.argv.slice(2));
+    const out=[];
+    for(const [name,s] of Object.entries(m.mcpServers||{})){
+      if(s.skills?.some(k=>names.has(k))) out.push({name,...s});
+    }
+    process.stdout.write(JSON.stringify(out));
+  ' "$MANIFEST" "$@"
+}
+
+# 按 URL 去重后合并写入目标配置。node 直接输出逐条结果。
+apply_mcp_merge() { # 目标文件 顶层键路径(如 mcpServers 或 mcp.servers) 服务器JSON
+  local file="$1" path="$2" servers_json="$3"
+  node -e '
+    const fs=require("fs"),path=require("path");
+    const [f, p, json] = process.argv.slice(1);
+    const servers = JSON.parse(json);
+    const keys = p.split(".");
+    let cur = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f,"utf8")) : {};
+    let obj = cur;
+    for (const k of keys.slice(0,-1)) { obj[k] ??= {}; obj = obj[k]; }
+    const mapKey = keys[keys.length-1];
+    obj[mapKey] ??= {};
+    for (const s of servers) {
+      const isStdio = s.type === "stdio";
+      const entry = isStdio
+        ? { type: "stdio", command: s.command, args: s.args ?? [], env: s.env ?? {} }
+        : { type: s.type, url: s.url };
+      const dup = isStdio
+        ? Object.keys(obj[mapKey]).includes(s.name)
+        : Object.values(obj[mapKey]).some(v => v && v.url === s.url);
+      if (dup) {
+        console.log(`ℹ  ${s.name}: 目标已存在同 URL/同名的服务器，跳过`);
+        continue;
+      }
+      obj[mapKey][s.name] = entry;
+      console.log(`✅ ${s.name} → ${f}`);
+    }
+    fs.mkdirSync(path.dirname(f), { recursive: true });
+    fs.writeFileSync(f, JSON.stringify(cur, null, 2) + "\n");
+  ' "$file" "$path" "$servers_json"
+}
+
+apply_mcp_for_target() { # servers_json
+  local servers_json="$1"
+  if [[ "$TARGET_TYPE" == global ]]; then
+    local cfg="$HOME/.zcode/cli/config.json"
+    if [[ -f "$cfg" ]]; then
+      local bak="$cfg.bak.$(date +%Y%m%d%H%M%S)"
+      cp "$cfg" "$bak" && info "用户 MCP 配置已备份到 $bak"
+    fi
+    apply_mcp_merge "$cfg" "mcp.servers" "$servers_json"
+  else
+    apply_mcp_merge "$PWD/.agents/mcp.json" "mcpServers" "$servers_json"
+  fi
+}
+
+# ---------- 子命令：mcp ----------
+cmd_mcp() {
+  if ! node -e 'const m=require(process.argv[1]);process.exit(m.mcpServers&&Object.keys(m.mcpServers).length?0:1)' "$MANIFEST"; then
+    info "manifest 中没有 MCP 服务器定义"
+    return 0
+  fi
+  node -e '
+    const fs=require("fs");
+    const m=require(process.argv[1]);
+    const projF=process.argv[2], userF=process.argv[3];
+    const read=f=>fs.existsSync(f)?JSON.parse(fs.readFileSync(f,"utf8")):{};
+    const proj=read(projF), user=read(userF);
+    const projServers=proj.mcpServers||{}, userServers=user.mcp?.servers||{};
+    console.log("manifest 中的 MCP 服务器:");
+    for(const [name,s] of Object.entries(m.mcpServers||{})){
+      const inUser=Object.values(userServers).some(v=>v&&v.url===s.url);
+      const inProj=Object.values(projServers).some(v=>v&&v.url===s.url);
+      const where=(inUser?"用户级":"")+(inUser&&inProj?"+":"")+(inProj?"项目级":"")||"未配置";
+      console.log(`  ${name.padEnd(14)} ${s.url}  → ${where}`);
+      const need=s.skills?.join(", ")||"";
+      if(need) console.log(`    (关联技能: ${need})`);
+    }
+  ' "$MANIFEST" "$PWD/.agents/mcp.json" "$HOME/.zcode/cli/config.json"
 }
 
 # ---------- 安装单个技能 ----------
@@ -289,6 +380,10 @@ case "$MODE" in
     cmd_check
     exit 0
     ;;
+  mcp)
+    cmd_mcp
+    exit 0
+    ;;
 esac
 
 # 解析要安装的技能（bash 3.2 兼容，不用 mapfile）
@@ -322,6 +417,18 @@ fail_count=0
 for t in "${TARGETS[@]}"; do
   install_one "$t" "$MODE" || fail_count=$((fail_count + 1))
 done
+
+# 配置与本次技能关联的 MCP 服务器
+if [[ "$MCP_ENABLED" == 1 ]]; then
+  servers_json="$(mcp_servers_for "${TARGETS[@]}")"
+  if [[ "$servers_json" != "[]" ]]; then
+    echo ""
+    info "配置关联的 MCP 服务器…"
+    apply_mcp_for_target "$servers_json"
+    echo ""
+    warn "MCP 服务器在会话启动时自动连接，需新开会话生效"
+  fi
+fi
 
 echo ""
 if (( fail_count > 0 )); then

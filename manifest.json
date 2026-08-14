@@ -214,5 +214,24 @@
       }
     }
   ],
-  "generatedAt": "2026-08-14T03:56:41.258Z"
+  "generatedAt": "2026-08-14T03:56:41.258Z",
+  "mcpServers": {
+    "nuxt-ui": {
+      "type": "http",
+      "url": "https://ui.nuxt.com/mcp",
+      "skills": [
+        "nuxt-ui"
+      ]
+    },
+    "cloudflare": {
+      "type": "http",
+      "url": "https://mcp.cloudflare.com/mcp",
+      "skills": [
+        "cloudflare",
+        "durable-objects",
+        "wrangler",
+        "workers-best-practices"
+      ]
+    }
+  }
 }

@@ -24,6 +24,20 @@ This repo is a **sources-only** skill kit: it stores **no skill bodies** — onl
 | `web-design-engineer` | Browser-rendered visual artifacts (pages/dashboards/prototypes) | [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) |
 | `find-skills` | Discover & install more skills (skills.sh ecosystem) | [vercel-labs/skills](https://github.com/vercel-labs/skills) (official) |
 
+## Automatic MCP server configuration
+
+Installing skills also auto-configures their **associated MCP servers** (defined in `manifest.json` → `mcpServers`):
+
+| MCP server | URL | Linked skills | Written to |
+|---|---|---|---|
+| `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | project → `.agents/mcp.json`; user → `~/.zcode/cli/config.json` |
+| `cloudflare` | https://mcp.cloudflare.com/mcp | cloudflare, durable-objects, wrangler, workers-best-practices | same |
+
+- **Deduped by URL** — an existing server with the same URL (any name) is skipped
+- **User-level merges back up the original config** first (`config.json.bak.<timestamp>`) and preserves other settings
+- `./install.sh mcp` shows status; `--no-mcp` skips MCP configuration
+- MCP servers auto-connect at session start — **new session required**; OAuth servers need a one-time authorization in the client
+
 ## Two ways to use
 
 ### A. Ask an AI (recommended)
@@ -38,7 +52,7 @@ This repo is a **sources-only** skill kit: it stores **no skill bodies** — onl
 | Check for updates | "Check if the skills in this project have updates using MySkillKit" |
 | Update skills | "Update the skills in this project using MySkillKit (back up old versions before overwriting)" |
 
-The AI clones the repo → reads the `AGENTS.md` install protocol + `manifest.json` → confirms which skills with you → fetches the latest version from each source → validates → reports.
+The AI clones the repo → reads the `AGENTS.md` install protocol + `manifest.json` → confirms which skills with you → fetches the latest version from each source → validates → **configures the linked MCP servers** → reports.
 
 > 💡 New session required after install/update — skills load at session start.
 

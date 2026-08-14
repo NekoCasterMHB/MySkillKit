@@ -24,6 +24,20 @@
 | `web-design-engineer` | 浏览器渲染视觉产物（页面/仪表盘/原型） | [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) |
 | `find-skills` | 发现与安装更多技能（skills.sh 生态） | [vercel-labs/skills](https://github.com/vercel-labs/skills)（官方） |
 
+## 自动配置 MCP 服务器
+
+安装技能时，会一并自动配置**关联的 MCP 服务器**（定义在 `manifest.json` 的 `mcpServers` 段）：
+
+| MCP 服务器 | URL | 关联技能 | 配置位置 |
+|---|---|---|---|
+| `nuxt-ui` | https://ui.nuxt.com/mcp | nuxt-ui | 项目级 → `.agents/mcp.json`；用户级 → `~/.zcode/cli/config.json` |
+| `cloudflare` | https://mcp.cloudflare.com/mcp | cloudflare、durable-objects、wrangler、workers-best-practices | 同上 |
+
+- **按 URL 去重**：目标中已有同 URL 的服务器（无论名字）会自动跳过，不会重复配置
+- **用户级合并时先备份**原配置文件（`config.json.bak.<时间戳>`），并保留原有其他配置
+- `./install.sh mcp` 查看当前配置状态；`--no-mcp` 跳过 MCP 配置
+- MCP 服务器在会话启动时自动连接，**需新开会话生效**；需要 OAuth 的服务器首次连接时在客户端完成授权
+
 ## 两种使用方式
 
 ### 方式 A：告诉 AI（推荐）
@@ -38,7 +52,7 @@
 | 检查项目里的 skills 是否有更新 | 「用 MySkillKit 检查这个项目已安装的 skills 有没有更新」 |
 | 更新项目里的 skills | 「用 MySkillKit 更新这个项目里的 skills（覆盖前备份旧版）」 |
 
-AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manifest.json` 清单 → 与你确认要装哪些（或按你的指定）→ 从源头拉取最新版 → 校验 → 报告结果。
+AI 收到指令后会：克隆仓库 → 读 `AGENTS.md` 安装协议和 `manifest.json` 清单 → 与你确认要装哪些（或按你的指定）→ 从源头拉取最新版 → 校验 → **一并配置关联的 MCP 服务器** → 报告结果。
 
 > 💡 记不住 URL 时，只说「用我的 MySkillKit 仓库」也能理解（ZCode 知道你的常用仓库），但给出 URL 最稳妥。装完/更新后**新开会话**生效。
 
