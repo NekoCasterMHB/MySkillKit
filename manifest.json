@@ -32,6 +32,20 @@
       }
     },
     {
+      "name": "cloudflare",
+      "description": "Comprehensive Cloudflare platform skill covering Workers, Pages, storage (KV, D1, R2), AI (Workers AI, Vectorize, Agents SDK), feature flags (Flagship), networking (Tunnel, Spectrum), security (WAF, DDoS), and infrastructure-as-code (Terraform, Pulumi). Use for any Cloudflare development task. Biases towards retrieval from Cloudflare docs over pre-trained knowledge.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/cloudflare/skills.git",
+        "path": "skills/cloudflare",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "f96bff754e428838818017f75817f0f9428acd48",
+        "checkedAt": "2026-08-14T03:56:36.124Z"
+      }
+    },
+    {
       "name": "design",
       "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform). Actions: design logo, create CIP, generate mockups, build slides, design banner, generate icon, create social photos, social media images, brand identity, design system. Platforms: Facebook, Twitter, LinkedIn, YouTube, Instagram, Pinterest, TikTok, Threads, Google Ads.",
       "source": {
@@ -57,6 +71,20 @@
       "version": {
         "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
         "checkedAt": "2026-08-14T03:46:29.304Z"
+      }
+    },
+    {
+      "name": "durable-objects",
+      "description": "Create and review Cloudflare Durable Objects. Use when building stateful coordination (chat rooms, multiplayer games, booking systems), implementing RPC methods, SQLite storage, alarms, WebSockets, or reviewing DO code for best practices. Covers Workers integration, wrangler config, and testing with Vitest. Biases towards retrieval from Cloudflare docs over pre-trained knowledge.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/cloudflare/skills.git",
+        "path": "skills/durable-objects",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "f96bff754e428838818017f75817f0f9428acd48",
+        "checkedAt": "2026-08-14T03:56:37.811Z"
       }
     },
     {
@@ -156,7 +184,35 @@
         "commit": "aaf9a82f5efd73e87cc0998edc398e75bfc35901",
         "checkedAt": "2026-08-14T03:46:39.335Z"
       }
+    },
+    {
+      "name": "workers-best-practices",
+      "description": "Reviews and authors Cloudflare Workers code against production best practices. Load when writing new Workers, reviewing Worker code, configuring wrangler.jsonc, or checking for common Workers anti-patterns (streaming, floating promises, global state, secrets, bindings, observability). Biases towards retrieval from Cloudflare docs over pre-trained knowledge.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/cloudflare/skills.git",
+        "path": "skills/workers-best-practices",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "f96bff754e428838818017f75817f0f9428acd48",
+        "checkedAt": "2026-08-14T03:56:41.245Z"
+      }
+    },
+    {
+      "name": "wrangler",
+      "description": "Cloudflare Workers CLI for deploying, developing, and managing Workers, KV, R2, D1, Vectorize, Hyperdrive, Workers AI, Containers, Queues, Workflows, Pipelines, and Secrets Store. Load before running wrangler commands to ensure correct syntax and best practices. Biases towards retrieval from Cloudflare docs over pre-trained knowledge.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/cloudflare/skills.git",
+        "path": "skills/wrangler",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "f96bff754e428838818017f75817f0f9428acd48",
+        "checkedAt": "2026-08-14T03:56:39.447Z"
+      }
     }
   ],
-  "generatedAt": "2026-08-14T03:46:40.936Z"
+  "generatedAt": "2026-08-14T03:56:41.258Z"
 }

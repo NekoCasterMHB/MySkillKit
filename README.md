@@ -4,7 +4,7 @@
 
 本仓库是**纯来源清单**式的个人技能集：**不保存技能本体**，只维护一份 `manifest.json` 技能清单，记录每个技能的上游公开来源。安装时直接按清单从源头拉取**最新版** —— 从结构上杜绝"装到旧版本"的问题。
 
-## 包含的技能（11 个）
+## 包含的技能（15 个）
 
 | 技能 | 用途 | 上游来源 |
 |---|---|---|
@@ -17,6 +17,10 @@
 | `slides` | Chart.js 战略演示文稿 | 同上 |
 | `nuxt-ui` | 用 @nuxt/ui v4 构建界面 | [nuxt/ui](https://github.com/nuxt/ui)（官方） |
 | `supabase` | Supabase 全产品开发（DB/Auth/Edge/Storage…） | [supabase/agent-skills](https://github.com/supabase/agent-skills)（官方） |
+| `cloudflare` | Cloudflare 全平台开发（Workers/Pages/KV/D1/R2/AI/安全） | [cloudflare/skills](https://github.com/cloudflare/skills)（官方） |
+| `durable-objects` | Cloudflare Durable Objects：有状态协同/RPC/SQLite | 同上 |
+| `wrangler` | Cloudflare Workers CLI 部署与开发 | 同上 |
+| `workers-best-practices` | Cloudflare Workers 生产最佳实践审查 | 同上 |
 | `web-design-engineer` | 浏览器渲染视觉产物（页面/仪表盘/原型） | [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) |
 | `find-skills` | 发现与安装更多技能（skills.sh 生态） | [vercel-labs/skills](https://github.com/vercel-labs/skills)（官方） |
 

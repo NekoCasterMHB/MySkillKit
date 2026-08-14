@@ -4,7 +4,7 @@
 
 This repo is a **sources-only** skill kit: it stores **no skill bodies** — only a `manifest.json` listing each skill and its upstream source. Installing pulls the **latest version directly from the source**, so installing from this repo can never give you a stale copy.
 
-## Bundled skills (11)
+## Bundled skills (15)
 
 | Skill | Purpose | Upstream |
 |---|---|---|
@@ -17,6 +17,10 @@ This repo is a **sources-only** skill kit: it stores **no skill bodies** — onl
 | `slides` | Chart.js strategic HTML presentations | same |
 | `nuxt-ui` | Build UIs with @nuxt/ui v4 | [nuxt/ui](https://github.com/nuxt/ui) (official) |
 | `supabase` | All Supabase products (DB/Auth/Edge/Storage…) | [supabase/agent-skills](https://github.com/supabase/agent-skills) (official) |
+| `cloudflare` | Full Cloudflare platform (Workers/Pages/KV/D1/R2/AI/Security) | [cloudflare/skills](https://github.com/cloudflare/skills) (official) |
+| `durable-objects` | Cloudflare Durable Objects: stateful coordination/RPC/SQLite | same |
+| `wrangler` | Cloudflare Workers CLI deploy & develop | same |
+| `workers-best-practices` | Cloudflare Workers production best-practices review | same |
 | `web-design-engineer` | Browser-rendered visual artifacts (pages/dashboards/prototypes) | [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills) |
 | `find-skills` | Discover & install more skills (skills.sh ecosystem) | [vercel-labs/skills](https://github.com/vercel-labs/skills) (official) |
 
