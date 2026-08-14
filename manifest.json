@@ -1,0 +1,162 @@
+{
+  "name": "MySkillKit",
+  "description": "个人常用 AI 技能合集（纯来源清单版）— 安装时从上游直接拉取最新版",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "banner-design",
+      "description": "Design banners for social media, ads, website heroes, creative assets, and print. Multiple art direction options with AI-generated visuals. Actions: design, create, generate banner. Platforms: Facebook, Twitter/X, LinkedIn, YouTube, Instagram, Google Display, website hero, print. Styles: minimalist, gradient, bold typography, photo-based, illustrated, geometric, retro, glassmorphism, 3D, neon, duotone, editorial, collage. Uses ui-ux-pro-max, frontend-design, ai-artist, ai-multimodal skills.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/banner-design",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:24.324Z"
+      }
+    },
+    {
+      "name": "brand",
+      "description": "Brand voice, visual identity, messaging frameworks, asset management, brand consistency. Activate for branded content, tone of voice, marketing assets, brand compliance, style guides.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/brand",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:25.988Z"
+      }
+    },
+    {
+      "name": "design",
+      "description": "Comprehensive design skill: brand identity, design tokens, UI styling, logo generation (55 styles, Gemini AI), corporate identity program (50 deliverables, CIP mockups), HTML presentations (Chart.js), banner design (22 styles, social/ads/web/print), icon design (15 styles, SVG, Gemini 3.1 Pro), social photos (HTML→screenshot, multi-platform). Actions: design logo, create CIP, generate mockups, build slides, design banner, generate icon, create social photos, social media images, brand identity, design system. Platforms: Facebook, Twitter, LinkedIn, YouTube, Instagram, Pinterest, TikTok, Threads, Google Ads.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/design",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:27.627Z"
+      }
+    },
+    {
+      "name": "design-system",
+      "description": "Token architecture, component specifications, and slide generation. Three-layer tokens (primitive→semantic→component), CSS variables, spacing/typography scales, component specs, strategic slide creation. Use for design tokens, systematic design, brand-compliant presentations.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/design-system",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:29.304Z"
+      }
+    },
+    {
+      "name": "find-skills",
+      "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/vercel-labs/skills.git",
+        "path": "skills/find-skills",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "c6f69c631292444cc541ac6d91e2226b0ff247da",
+        "checkedAt": "2026-08-14T03:46:40.928Z"
+      }
+    },
+    {
+      "name": "nuxt-ui",
+      "description": "Build UIs with @nuxt/ui v4 — 125+ accessible Vue components with Tailwind CSS theming. Use when creating interfaces, customizing themes to match a brand, building forms, or composing layouts like dashboards, docs sites, and chat interfaces.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nuxt/ui.git",
+        "path": "skills/nuxt-ui",
+        "ref": "v4"
+      },
+      "version": {
+        "commit": "7c74269387c6ef744b3f05ba5085d4ebcfc41270",
+        "checkedAt": "2026-08-14T03:46:36.114Z"
+      }
+    },
+    {
+      "name": "slides",
+      "description": "Create strategic HTML presentations with Chart.js, design tokens, responsive layouts, copywriting formulas, and contextual slide strategies.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/slides",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:30.936Z"
+      }
+    },
+    {
+      "name": "supabase",
+      "description": "Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-js, @supabase/ssr) in Next.js, React, SvelteKit, Astro, Remix; auth issues (login, logout, sessions, JWT, cookies, getSession, getUser, getClaims, RLS); Supabase CLI or MCP server; schema changes, migrations, declarative schemas, security audits, Postgres extensions (pg_graphql, pg_cron, pg_vector); debugging and troubleshooting errors or unexpected behavior on Supabase projects (HTTP errors, Postgres errors, RLS surprises, permission denied, schema cache issues, timeouts, Edge Function crashes, Realtime drops, Storage failures) and reading or querying logs (Logs Explorer, ClickHouse).",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/supabase/agent-skills.git",
+        "path": "skills/supabase",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "8331f910845103c08d51f6ca1d86ebb7d1f745e3",
+        "checkedAt": "2026-08-14T03:46:37.694Z"
+      }
+    },
+    {
+      "name": "ui-styling",
+      "description": "Create beautiful, accessible user interfaces with shadcn/ui components (built on Radix UI + Tailwind), Tailwind CSS utility-first styling, and canvas-based visual designs. Use when building user interfaces, implementing design systems, creating responsive layouts, adding accessible components (dialogs, dropdowns, forms, tables), customizing themes and colors, implementing dark mode, generating visual designs and posters, or establishing consistent styling patterns across applications.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/ui-styling",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:32.726Z"
+      }
+    },
+    {
+      "name": "ui-ux-pro-max",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 79 searchable styles (50 active), 192 product palettes and reasoning profiles, 74 font pairings, 119 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git",
+        "path": ".claude/skills/ui-ux-pro-max",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "a38d04c3d5c298c851dbe5e6ee1965ee3de42cb5",
+        "checkedAt": "2026-08-14T03:46:34.492Z"
+      }
+    },
+    {
+      "name": "web-design-engineer",
+      "description": "Build or redesign polished browser-rendered visual artifacts with HTML/CSS/JavaScript/React: pages, dashboards, prototypes, slide decks, animations, UI mockups, and data visualizations. Use for visual front-end creation, design-system exploration, design critique, or explicit browser acceptance / QA of a web artifact. Not for back-end, CLI, non-visual coding, source-to-longform article conversion, or narration-driven click-through video presentations.",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/ConardLi/garden-skills.git",
+        "path": "skills/web-design-engineer",
+        "ref": "main"
+      },
+      "version": {
+        "commit": "aaf9a82f5efd73e87cc0998edc398e75bfc35901",
+        "checkedAt": "2026-08-14T03:46:39.335Z"
+      }
+    }
+  ],
+  "generatedAt": "2026-08-14T03:46:40.936Z"
+}

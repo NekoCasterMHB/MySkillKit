@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# 日志与临时文件
+*.log
+.tmp/
+
+# 安装产生的备份（仅出现在目标项目里，这里兜底）
+.backup/
+.zcode/
